@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Unified Bots Tools</title>
+<style>
+body{font-family:Arial;background:#0f172a;color:white;text-align:center}
+.box{background:#1e293b;padding:20px;margin:20px;border-radius:10px}
+button{padding:10px 20px;background:#38bdf8;border:none;color:white;border-radius:5px}
+input,textarea{width:80%;padding:10px;margin:10px}
+</style>
+</head>
+<body>
+
+<h1>🚀 Unified Bots Platform</h1>
+
+<div class="box">
+<h2>AI Tool</h2>
+<input id="ai_text">
+<button onclick="ai()">Send</button>
+<p id="ai_res"></p>
+</div>
+
+<div class="box">
+<h2>Text Correction</h2>
+<input id="cor_text">
+<button onclick="cor()">Fix</button>
+<p id="cor_res"></p>
+</div>
+
+<div class="box">
+<h2>HTML Preview</h2>
+<textarea id="html_code"></textarea>
+<button onclick="htmlrun()">Run</button>
+<pre id="html_res"></pre>
+</div>
+
+<script>
+function ai(){
+let f=new FormData();f.append("text",document.getElementById("ai_text").value)
+fetch("/run-ai",{method:"POST",body:f}).then(r=>r.json()).then(d=>{
+document.getElementById("ai_res").innerText=d.reply})
+}
+
+function cor(){
+let f=new FormData();f.append("text",document.getElementById("cor_text").value)
+fetch("/text-correction",{method:"POST",body:f}).then(r=>r.json()).then(d=>{
+document.getElementById("cor_res").innerText=d.result})
+}
+
+function htmlrun(){
+let f=new FormData();f.append("code",document.getElementById("html_code").value)
+fetch("/html-preview",{method:"POST",body:f}).then(r=>r.json()).then(d=>{
+document.getElementById("html_res").innerText=d.preview})
+}
+</script>
+
+</body>
+</html>
